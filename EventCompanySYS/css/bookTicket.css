@@ -1,0 +1,93 @@
+#eventInfo
+{
+    box-shadow: .2rem .8rem 1rem #0005;
+    padding: 1em;
+    margin: auto;
+    justify-content: center;
+    width: 70%;
+    flex-wrap: wrap;
+    background-color: #7fb5f0; 
+    border-radius: .8rem;
+}
+
+.description
+{
+    text-align: left;
+}
+
+#eventBanner
+{
+    width: 55%;
+    height: auto;
+
+}
+
+#eventInfo h3
+{
+    font-size: 35px;
+    padding-bottom: 1rem;
+}
+
+#eventInfo p
+{
+    font-size: 25px;
+}
+
+
+input[type="text"],
+input[type="number"] {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 5px solid #ccc;
+    border-radius: 8px;
+    transition: border-color 0.2s ease-in-out;
+}
+
+input[type="text"]
+{
+    width: 70%;
+    margin-bottom: 10px;
+}
+
+input[type="number"]
+{
+    width: 40%;
+}
+
+input:focus {
+    outline: none;
+    border-color: #ffe6bc;
+}
+
+#confirm
+{
+    margin-top: 1em;
+    width: 40%;
+    background-color: #7ff0a1;
+    border-radius: .5rem;
+    font-size: large;
+    padding: 5px;
+    cursor: pointer;
+}
+
+label
+{
+    font-size: 25px;
+}
+
+#eventContainer
+{
+    padding: .5em;
+    gap:10px;
+    display: flex;
+    flex-direction: row;
+    background-color: #ffe6bc;
+    margin-bottom: 15px;
+}
+
+.bookingDetails
+{
+    display: flex;
+    flex-direction: row;
+    gap:20%;
+}

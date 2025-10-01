@@ -1,0 +1,123 @@
+
+input[type="text"],
+select,
+input[type="date"],
+input[type="number"] {
+    padding: .3em;
+    font-size: 1rem;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    transition: border-color 0.2s ease-in-out;
+}
+
+input:focus {
+    outline: none;
+    border-color: #007BFF;
+}
+
+select:focus {
+    outline: none;
+    border-color: #007BFF;
+}
+
+#search
+{
+    background-color: #7ff0a1;
+    border-radius: .5rem;
+    font-size: large;
+    padding: 5px;
+    cursor: pointer;
+}
+
+#icon
+{
+    width: 20px;
+    height: auto;
+}
+#banner
+{
+    
+    width: 500px;
+    height: 300px;
+    padding: 10px 0px 10px 0px;
+
+}
+#optionName
+{
+    margin: 10px 0px 5px 0px;
+    font-size: 30px;
+    text-align: center;
+}
+
+.listOfEvents
+{
+    justify-content: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.description
+{
+    margin: 0px 10px 0px 10px;
+}
+
+.frame
+{
+    width: 500px;
+    border-radius: .8rem;
+    margin: 1em;
+    background-color: #7fb5f0; 
+    box-shadow: .2rem .8rem 1rem #0005;
+    cursor: pointer;
+}
+
+.frame:hover
+{
+    background-color: #328dee;
+}
+
+
+#action
+{
+    background-color: #7ff0a1;
+    border-radius: .5rem;
+    font-size: large;
+    padding: 5px;
+    cursor: pointer;
+}
+
+#action:hover
+{
+    background-color: #8bd1a0;
+}
+
+.buttons
+{
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.filter
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    background-color: #ffe6bc;
+    padding: 1em 0px 1em 0px;   
+    gap:10px;
+}
+
+#event
+{
+    width: 100%;
+}
+
+h1
+{
+    text-align: center;
+    margin-bottom: 1em;
+}

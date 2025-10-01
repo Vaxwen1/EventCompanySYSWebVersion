@@ -1,0 +1,123 @@
+.regForm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 1em auto;
+}
+
+.mainContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 1em;
+    flex-wrap: wrap;
+    gap: 1em;
+}
+
+.tableContainer {
+    margin: 1em;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    width: 100%;
+    max-width: 600px;
+    flex: 1;
+}
+
+.scrollableTable {
+    max-height: 300px;
+    overflow: auto;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+.tableContainer table {
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    border: 1px solid #ddd;
+    min-width: 500px;
+}
+
+.tableContainer table th,
+.tableContainer table td {
+    border: 1px solid #ccc;
+    padding: 0.75em;
+    text-align: left;
+    background-color: #fafafa;
+}
+
+.form {
+    background-color: white;
+    padding: 3em 5em;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1em;
+    justify-content: center;
+}
+
+label {
+    margin-bottom: 0.5em;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="number"],
+select,
+input[type="submit"] {
+    padding: 0.5em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+input:focus {
+    outline: none;
+    border-color: #007BFF;
+}
+
+select:focus {
+    outline: none;
+    border-color: #007BFF;
+}
+
+input[type="submit"] {
+    background-color: #0056b3;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 30%;
+    display: block;
+    margin: 1em auto;
+}
+
+input[type="submit"]:hover {
+    background-color: #004299;
+}
+
+#groupName {
+    text-align: center;
+    margin-top: 1.5em;
+    font-weight: bold;
+    color: #333;
+}
+
+table.scrollableTable tbody tr:hover td {
+    background-color: #4297be;
+    color: white;
+    cursor: pointer;
+}
+
+table.scrollableTable thead th {
+    background-color: #0056b3;
+    color: white;
+}

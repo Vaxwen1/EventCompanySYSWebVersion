@@ -1,0 +1,207 @@
+DROP TABLE IF EXISTS bookings; 
+DROP TABLE IF EXISTS events; 
+DROP TABLE IF EXISTS clients;
+DROP TABLE IF EXISTS eventtypes; 
+DROP TABLE IF EXISTS venues; 
+DROP TABLE IF EXISTS Users; 
+
+create table EventTypes
+(
+typeID varchar(2) not null unique,
+Name varchar(20),
+primary key(typeID)
+)engine=InnoDB;
+
+create table Users
+(
+UserId varchar(10) not null unique,
+Username varchar(30) not null unique,
+Password varchar(16) not null unique,
+Email varchar(50) unique,
+Type ENUM('Staff', 'Client', 'Admin') DEFAULT 'Client',
+primary key(UserId)
+)engine=InnoDB;
+
+create table Venues
+(
+venueID TINYINT UNSIGNED not null auto_increment,
+name varchar(30) UNIQUE,
+description text,
+capacity SMALLINT UNSIGNED,
+contactPerson VARCHAR(50),
+contactNumber VARCHAR(13),
+email VARCHAR(100) UNIQUE, 
+building varchar(30),
+street varchar(30),
+city varchar(30),
+county varchar(30),
+eircode varchar(8),
+status ENUM('A', 'D', 'P') DEFAULT 'A',
+primary key(venueID)
+)engine=InnoDB;
+
+create table Clients
+(
+clientID TINYINT UNSIGNED not null auto_increment,
+orgName varchar(30),
+contactPerson VARCHAR(50),
+telephone varchar(13),
+email varchar(50),
+building varchar(30),
+street varchar(30),
+city varchar(30),
+county varchar(30),
+eircode varchar(8),
+status ENUM('A', 'D', 'P') DEFAULT 'A',
+primary key(clientID)
+)engine=InnoDB;
+
+
+CREATE TABLE Events (
+    eventID TINYINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    name VARCHAR(50),
+    eventType VARCHAR(2) NOT NULL,
+    clientID TINYINT UNSIGNED,
+    description TEXT,
+    venueid TINYINT UNSIGNED,
+    eventDate DATE,
+    startTime VARCHAR(5),
+    duration SMALLINT UNSIGNED,
+    capacity SMALLINT UNSIGNED,
+    tickets SMALLINT UNSIGNED,
+    availableTickets INT,
+    price DECIMAL(10,2),
+    filepath TEXT NOT NULL,
+    status ENUM('A', 'C', 'P') DEFAULT 'A',
+    PRIMARY KEY(eventID),
+    FOREIGN KEY fk_eventType(eventType) REFERENCES EventTypes(typeID),
+    FOREIGN KEY fk_client(clientID) REFERENCES Clients(clientID),
+    FOREIGN KEY fk_venue(venueid) REFERENCES Venues(venueid)
+) ENGINE=InnoDB;
+
+
+create table Bookings
+(
+bookingID TINYINT UNSIGNED not null auto_increment,
+email varchar(50),
+eventid TINYINT UNSIGNED,
+numberOfTickets TINYINT UNSIGNED,
+price decimal(10,2),
+status ENUM('A', 'C', 'P') DEFAULT 'A',
+primary key(bookingID),
+foreign key fk_event(eventid) references Events(eventid)
+)engine=InnoDB;
+
+
+
+--fill with data
+
+
+INSERT INTO EventTypes (typeID, Name) VALUES
+('CO', 'Conference'),
+('SE', 'Seminar'),
+('WO', 'Workshop'),
+('ME', 'Meeting'),
+('WE', 'Wedding'),
+('PA', 'Party'),
+('EX', 'Exhibition'),
+('CT', 'Concert'),
+('FA', 'Festival'),
+('NE', 'Networking Event'),
+('SP', 'Sports Event'),
+('FU', 'Fundraiser'),
+('TO', 'Tour'),
+('CM', 'Community Event'),
+('ED', 'Educational Event'),
+('MO', 'Movie Screening');
+
+-- Clients 
+INSERT INTO Users (UserId, Username, Password, Email, Type) VALUES
+('U000000001', 'client_alice',   'AlicePass01',  'alice@example.com',  'Client'),
+('U000000002', 'client_bob',     'BobPass123',   'bob@example.com',    'Client'),
+('U000000003', 'client_carol',   'CarolPwd456',  'carol@example.com',  'Client'),
+('U000000004', 'client_david',   'David2025!',   'david@example.com',  'Client');
+
+-- Staff
+INSERT INTO Users (UserId, Username, Password, Type) VALUES
+('S000000001', 'staff_emily',    'EmilyStrong1',  'Staff'),
+('S000000002', 'staff_frank',    'FrankWork88',   'Staff'),
+('S000000003', 'staff_grace',    'GraceLogin9',   'Staff'),
+('S000000004', 'staff_henry',    'HenryOffice0',  'Staff');
+
+-- Admins
+INSERT INTO Users (UserId, Username, Password, Type) VALUES
+('A000000001', 'admin_izzy',     'IzzyAdmin01',   'Admin'),
+('A000000002', 'admin_jack',     'JackMaster2',   'Admin'),
+('A000000003', 'admin_karen',    'KarenRoot03',   'Admin'),
+('A000000004', 'admin_luke',     'LukeSecure4!',  'Admin');
+
+
+INSERT INTO Venues (name, description, capacity, contactPerson, contactNumber, email, building, street, city, county, eircode) VALUES
+('Grand Hall', 'A spacious hall for large events.', 500, 'John Smith', '+353871234567', 'john.smith@grandhall.ie', 'Building A', 'Main Street', 'Dublin', 'Dublin', 'D01ABC1'),
+('Riverside Conference Center', 'Modern venue with river views.', 300, 'Emily Johnson', '+353869876543', 'emily.johnson@riverside.ie', 'Block B', 'River Road', 'Cork', 'Cork', 'T12XYZ9'),
+('TechHub Auditorium', 'High-tech venue ideal for conferences.', 250, 'Sarah Murphy', '+353836543210', 'sarah.murphy@techhub.ie', 'Innovation Park', 'Tech Avenue', 'Limerick', 'Limerick', 'V94GHI7'),
+('Greenfield Community Hall', 'Perfect for local gatherings and fundraisers.', 150, 'Patrick Doyle', '+353898765432', 'patrick.doyle@greenfield.ie', 'Community Centre', 'Oak Lane', 'Waterford', 'Waterford', 'X91JKL8'),
+('Starlight Theater', 'An open-air theater for concerts and performances.', 600, 'Laura Nolan', '+353873216549', 'laura.nolan@starlight.ie', 'Theater District', 'Broadway Road', 'Kilkenny', 'Kilkenny', 'R95MNO2'),
+('Sunset Garden Venue', 'Outdoor venue ideal for weddings and receptions.', 350, 'James Byrne', '+353867412580', 'james.byrne@sunsetgarden.ie', 'Garden Estate', 'Sunset Drive', 'Sligo', 'Sligo', 'F91PQR3'),
+('Oceanview Banquet Hall', 'A stunning sea-view venue for corporate and social events.', 280, 'Rebecca Finn', '+353859638520', 'rebecca.finn@oceanview.ie', 'Seaside Plaza', 'Harbor Street', 'Wexford', 'Wexford', 'Y35STU4'),
+('The Rustic Barn', 'A charming countryside barn perfect for rustic weddings.', 200, 'Kevin McGrath', '+353875556677', 'kevin.mcgrath@rusticbarn.ie', 'Farmhouse Grounds', 'Country Road', 'Clare', 'Clare', 'V95VWX5'),
+('Metropolitan Exhibition Hall', 'Large-scale exhibition hall for trade shows and expos.', 800, 'Catherine O Brien', '+353869871123', 'catherine.obrien@metrohall.ie', 'Exhibition Centre', 'City Center', 'Belfast', 'Antrim', 'BT1YZA6');
+
+
+INSERT INTO Clients (orgName, contactPerson, telephone, email, building, street, city, county, eircode, status) VALUES
+('Green Leaf Charity', 'Mary O Donnell', '+353861234567', 'mary.odonnell@greenleaf.ie', 'Unit 5', 'Charity Street', 'Dublin', 'Dublin', 'D02ABC1', 'A'),
+('Sunny Side Nursing Home', 'Paul Brennan', '+353879876543', 'paul.brennan@sunnyside.ie', 'Building 12', 'Elm Road', 'Cork', 'Cork', 'T12XYZ9', 'A'),
+('West Coast Bookstore', 'Sinead Ryan', '+353899874563', 'sinead.ryan@westcoastbooks.ie', 'Shop 22', 'Library Square', 'Limerick', 'Limerick', 'V94GHI7', 'A'),
+('Happy Paws Veterinary', 'Declan Finn', '+353879832145', 'declan.finn@happypaws.ie', 'Clinic B', 'Pet Street', 'Waterford', 'Waterford', 'X91JKL8', 'A'),
+('Sunshine Bakery', 'Emma Nolan', '+353856987412', 'emma.nolan@sunshinebakery.ie', 'Bakery House', 'Market Road', 'Kilkenny', 'Kilkenny', 'R95MNO2', 'A'),
+('Silverline Accounting', 'John Casey', '+353867412580', 'john.casey@silverline.ie', 'Suite 3A', 'Finance Avenue', 'Sligo', 'Sligo', 'F91PQR3', 'A'),
+('Harbor Auto Repairs', 'Liam Keane', '+353859638520', 'liam.keane@harborautorepairs.ie', 'Garage 5', 'Harbor Road', 'Wexford', 'Wexford', 'Y35STU4', 'D'),
+('EcoGrow Garden Center', 'Rachel Byrne', '+353875556677', 'rachel.byrne@ecogrow.ie', 'Greenhouse A', 'Country Road', 'Clare', 'Clare', 'V95VWX5', 'A'),
+('CodeCrafters Ltd.', 'Mark Duffy', '+353883334455', 'mark.duffy@codecrafters.ie', 'Software Plaza', 'Developer Lane', 'Galway', 'Galway', 'H92JKL7', 'A'),
+('ByteWave Technologies', 'David Kelly', '+353861112233', 'david.kelly@bytewave.ie', 'Tech Park', 'Innovation Street', 'Dublin', 'Dublin', 'D04DEF5', 'A'),
+('DataSync Solutions', 'Emma Walsh', '+353894445566', 'emma.walsh@datasync.ie', 'Cloud Center', 'Sync Avenue', 'Limerick', 'Limerick', 'V95MNO8', 'A'),
+('Quantum AI Labs', 'Tom Fitzgerald', '+353905556677', 'tom.fitzgerald@quantumailabs.ie', 'AI Tower', 'Future Street', 'Waterford', 'Waterford', 'X92PQR9', 'A');
+
+INSERT INTO Events (
+    name, eventType, clientID, description, venueid, eventDate, startTime, duration,
+    capacity, tickets, availableTickets, price, filepath, status
+) VALUES
+-- Conferences
+('Tech Innovators Conference', 'CO', 10, 'A conference featuring the latest innovations in technology.', 3, '2025-06-15', '09:00', 480, 250, 250, 100, 149.99, 'img/eventsImg/Tech Innovators Conference.jpg','A'),
+('Cybersecurity Summit', 'CO', 11, 'A cybersecurity-focused conference with industry leaders.', 2, '2025-09-10', '10:00', 480, 300, 300, 150, 199.99, 'img/eventsImg/CybersecuritySumit.jpeg', 'A'),
+
+-- Workshops
+('Cloud Computing Workshop', 'WO', 12, 'A hands-on workshop covering cloud computing fundamentals.', 3, '2025-07-22', '13:00', 240, 150, 150, 50, 99.99, 'img/eventsImg/cloudComputingWorkshop.jpg', 'A'),
+('AI & Machine Learning Bootcamp', 'WO', 9, 'A deep dive into artificial intelligence and machine learning.', 5, '2025-08-05', '10:00', 360, 200, 200, 120, 179.99, 'img/eventsImg/MachineLearning.jpg', 'A'),
+
+-- Meetings
+('Startup Networking Meetup', 'ME', 7, 'A casual networking event for startup founders and investors.', 1, '2025-04-20', '18:00', 180, 100, 100, 30, 29.99, 'img/eventsImg/StartupNetworkingMeetup.jpg', 'A'),
+('Quantum Computing Discussion', 'ME', 8, 'A roundtable discussion on the future of quantum computing.', 4, '2025-06-12', '15:00', 120, 120, 120, 70, 49.99, 'img/eventsImg/default.jpeg', 'A'),
+
+-- Concerts
+('Rock Night Live', 'CT', 5, 'A night of live rock music featuring popular bands.', 9, '2025-10-25', '19:00', 240, 800, 800, 500, 79.99, 'img/eventsImg/RockLive.jpg', 'A'),
+('Jazz Evening', 'CT', 6, 'An intimate jazz concert with renowned artists.', 6, '2025-09-18', '18:30', 210, 350, 350, 250, 59.99, 'img/eventsImg/default.jpeg', 'A'),
+
+-- Weddings
+('Elegant Wedding Celebration', 'WE', 1, 'A beautifully organized wedding with premium services.', 6, '2025-05-30', '15:00', 539, 350, 350, 100, 299.99, 'img/eventsImg/default.jpeg', 'A'),
+('Rustic Barn Wedding', 'WE', 2, 'A countryside wedding with a charming rustic theme.', 8, '2025-07-15', '14:00', 599, 200, 200, 90, 249.99, 'img/eventsImg/default.jpeg', 'A'),
+
+-- Sports Events
+('Marathon Championship', 'SP', 3, 'An annual marathon championship event.', 7, '2025-11-10', '08:00', 360, 500, 500, 200, 39.99, 'img/eventsImg/Marathon.jpeg', 'A'),
+('City Football Cup Final', 'SP', 4, 'The grand finale of the city football championship.', 5, '2025-12-05', '16:00', 240, 600, 600, 350, 89.99, 'img/eventsImg/default.jpeg', 'A'),
+
+-- Movie Screenings
+('Classic Film Night', 'MO', 5, 'A screening of classic Hollywood films.', 5, '2025-03-15', '20:00', 180, 250, 250, 150, 19.99, 'img/eventsImg/default.jpeg', 'A'),
+('Sci-Fi Movie Marathon', 'MO', 6, 'A marathon featuring popular sci-fi films.', 3, '2025-07-20', '18:00', 480, 250, 250, 80, 24.99, 'img/eventsImg/default.jpeg', 'A');
+
+-- BOOKINGS
+INSERT INTO Bookings (email, eventid, numberOfTickets, price, status) VALUES
+('alice@example.com', 1, 2, 299.98, 'A'),  -- Tech Innovators Conference
+('bob@example.com', 3, 1, 99.99, 'A'),     -- Cloud Computing Workshop
+('carol@example.com', 5, 3, 89.97, 'A'),   -- Startup Networking Meetup
+('david@example.com', 6, 2, 99.98, 'A'),   -- Quantum Computing Discussion
+('alice@example.com', 8, 1, 59.99, 'A'),   -- Jazz Evening
+('bob@example.com', 9, 2, 599.98, 'A'),    -- Elegant Wedding Celebration
+('carol@example.com', 11, 4, 159.96, 'A'), -- Marathon Championship
+('david@example.com', 12, 2, 179.98, 'A'); -- City Football Cup Final
